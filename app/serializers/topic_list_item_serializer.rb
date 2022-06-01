@@ -10,6 +10,7 @@ class TopicListItemSerializer < ListableTopicSerializer
              :last_poster_username,
              :category_id,
              :op_like_count,
+             :replies_word_count,
              :pinned_globally,
              :liked_post_numbers,
              :featured_link,
