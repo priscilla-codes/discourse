@@ -253,6 +253,7 @@ class PostRevisor
     post_process_post
 
     update_topic_word_counts
+    update_topic_replies_word_count
     alert_users
     publish_changes
     grant_badge
@@ -662,6 +663,17 @@ class PostRevisor
                       WHERE posts.topic_id = :topic_id
                     )
                     WHERE topics.id = :topic_id", topic_id: @topic.id)
+  end
+
+  def update_topic_replies_word_count
+    DB.exec("UPDATE topics
+                    SET replies_word_count = (
+                      SELECT SUM(COALESCE(posts.word_count, 0))
+                      FROM posts
+                      WHERE posts.topic_id = :topic_id
+                      AND posts.user_id != :topic_user_id
+                    )
+                    WHERE topics.id = :topic_id", topic_id: @topic.id, topic_user_id: @topic.user_id)
   end
 
   def alert_users

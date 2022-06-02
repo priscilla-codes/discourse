@@ -47,6 +47,7 @@
       <tr>
         <th><%= t 'js.topic.title' %></th>
         <th></th>
+        <th class="replies-word-count"><%= t 'js.replies-word_count' %></th>
         <th class="replies"><%= t 'js.replies' %></th>
         <th class="views"><%= t 'js.views' %></th>
         <th><%= t 'js.activity' %></th>
@@ -96,6 +97,9 @@
                 <img width="25" height="25" src="<%= poster.user.avatar_template.gsub('{size}', '25') %>" class="avatar" title='<%= h(poster.name_and_description) %>' aria-label='<%= h(poster.name_and_description) %>'>
               </a>
             <% end %>
+          </td>
+          <td class="word-count">
+            <span class='word-count'><%= t.word_count %></span>
           </td>
           <td class="replies">
             <span class='posts' title='<%= t 'posts' %>'><%= t.posts_count - 1 %></span>
