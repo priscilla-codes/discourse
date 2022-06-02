@@ -3585,6 +3585,11 @@ en:
     views_lowercase:
       one: "view"
       other: "views"
+    replies_word_count: "Replies Word Count"
+    sr_replies_word_count: "Sort by word count"
+    word_count_long: 
+      one: "this topic has %{count} word"
+      other: "this topic has %{count} words"
     replies: "Replies"
     sr_replies: "Sort by replies"
     views_long:

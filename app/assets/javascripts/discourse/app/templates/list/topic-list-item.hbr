@@ -51,6 +51,11 @@
   {{raw "list/posters-column" posters=topic.featuredUsers}}
 {{/if}}
 
+<td class="num replies-word-count topic-list-data">
+  {{raw-plugin-outlet name="topic-list-before-replies-word-count"}}
+  {{number topic.replies_word_count numberKey="replies_word_count_long"}}
+</td>
+
 {{raw "list/posts-count-column" topic=topic}}
 
 {{#if showLikes}}

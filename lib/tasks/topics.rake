@@ -99,3 +99,25 @@ task "topics:update_fancy_titles" => :environment do
 
   puts "", "Done"
 end
+
+task "topics:refresh_replies_word_count" => :environment do
+  puts "Refreshing replies_word_count on non-deleted topics..."
+  topics = Topic.where(deleted_at: nil)
+  total = topics.count
+  count = 0
+
+  topics.find_each do |t|
+    puts "HELLO UPDATING TOPIC#{t.title} #{t.user_id} #{t.replies_word_count}"
+    DB.exec("UPDATE topics
+                    SET replies_word_count = (
+                      SELECT SUM(COALESCE(posts.word_count, 0))
+                      FROM posts
+                      WHERE posts.topic_id = :topic_id
+                      AND posts.user_id != :topic_user_id
+                    )
+                    WHERE topics.id = :topic_id", topic_id: t.id, topic_user_id: t.user_id)
+    RakeHelpers.print_status(count += 1, total)
+  end
+
+  puts "", "Done"
+end
