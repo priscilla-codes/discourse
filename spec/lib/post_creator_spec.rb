@@ -894,6 +894,18 @@ describe PostCreator do
         expect(post_creator.errors.count).to be_zero
       end
     end
+
+    context 'when different user replies' do
+      fab!(:another_user) { Fabricate(:user) }
+      let(:reply) { PostCreator.new(another_user, raw: 'test reply', topic_id: topic.id, reply_to_post_number: 4) }
+
+      it 'updates topic replies word count' do
+        post = reply.create
+        topic.reload
+
+        expect(topic.replies_word_count).to eq(2)
+      end
+    end
   end
 
   context 'closed topic' do
